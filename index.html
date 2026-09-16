@@ -1,790 +1,969 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel de Acompanhamento - Embaixadores Estudantis Google 2026</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #F8F9FA;
-    }
-    h1, h2, h3, h4, .font-google {
-      font-family: 'Google Sans', sans-serif;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #F1F3F4;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #DADCE0;
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #BDC1C6;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Embaixador Estudantil Google | Gemini Canvas</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        google: {
+                            blue: '#1a73e8',
+                            red: '#ea4335',
+                            yellow: '#fbbc04',
+                            green: '#34a853',
+                            surface: '#f8fafd',
+                            dark: '#202124'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Google Sans', 'Roboto', 'Segoe UI', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        body {
+            background-color: #f8fafd;
+            color: #202124;
+            font-family: 'Google Sans', 'Roboto', sans-serif;
+        }
+
+        .task-checkbox:checked + div .task-title {
+            text-decoration: line-through;
+            color: #70757a;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #dadce0;
+            border-radius: 4px;
+        }
+        .badge-pulse {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52, 168, 83, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(52, 168, 83, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52, 168, 83, 0); }
+        }
+    </style>
 </head>
-<body class="text-gray-800 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col antialiased selection:bg-blue-100 selection:text-google-blue">
 
-  <!-- Topbar -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-30 px-4 lg:px-8 py-3 flex items-center justify-between shadow-sm">
-    <div class="flex items-center space-x-3">
-      <div class="flex items-center space-x-1">
-        <span class="w-3 h-3 rounded-full bg-[#4285F4]"></span>
-        <span class="w-3 h-3 rounded-full bg-[#EA4335]"></span>
-        <span class="w-3 h-3 rounded-full bg-[#FBBC05]"></span>
-        <span class="w-3 h-3 rounded-full bg-[#34A853]"></span>
-      </div>
-      <h1 class="text-lg lg:text-xl font-bold text-gray-800">
-        Painel de Atividades <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium border border-blue-200">Embaixadores Google 2026</span>
-      </h1>
-    </div>
+    <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="flex items-center space-x-1">
+                    <span class="w-3 h-3 rounded-full bg-[#4285F4]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#EA4335]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#FBBC05]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#34A853]"></span>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                        Programa de Embaixadores Estudantis Google
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-google-blue">2026</span>
+                    </h1>
+                    <p class="text-xs text-gray-500">Painel de Acompanhamento e Aprendizado com Gemini</p>
+                </div>
+            </div>
 
-    <div class="flex items-center space-x-3">
-      <button onclick="openModal('modal-conquistas')" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-300 hover:bg-gray-100 flex items-center gap-1.5 transition">
-        <span>🏆</span> <span class="hidden sm:inline">Tabela de</span> Conquistas
-      </button>
-      <button onclick="downloadHtmlFile()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#4285F4] text-white hover:bg-blue-600 flex items-center gap-1.5 transition shadow-sm">
-        <span>💾</span> <span>Baixar HTML</span>
-      </button>
-    </div>
-  </header>
+            <div class="flex items-center gap-3">
+                <button onclick="openModal('modal-conquistas')" class="px-3 py-1.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-trophy text-amber-500"></i>
+                    <span class="hidden sm:inline">Tabela de</span> Conquistas
+                </button>
+                <button onclick="openDeployModal()" class="px-3.5 py-1.5 rounded-xl bg-google-blue hover:bg-blue-600 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Publicar / Deploy</span>
+                </button>
+                <div class="text-right hidden sm:block">
+                    <span class="text-xs font-semibold text-gray-800 block">Alexsandra (Alê)</span>
+                    <span class="text-[11px] text-gray-500">Eng. de Software & Cibersegurança</span>
+                </div>
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-400 via-rose-400 to-indigo-500 p-0.5 flex items-center justify-center text-white font-bold text-sm shadow">
+                    <span>A</span>
+                </div>
+            </div>
+        </div>
 
-  <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
-    
-    <!-- Sidebar de Perfil & Métricas -->
-    <aside class="w-full lg:w-80 bg-white border-r border-gray-200 p-5 flex flex-col gap-5 shrink-0 overflow-y-auto custom-scrollbar">
-      
-      <!-- Card Perfil -->
-      <div class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50/40 rounded-xl border border-blue-100">
-        <div class="flex items-center space-x-3">
-          <div class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
-            AT
-          </div>
-          <div>
-            <h2 class="font-bold text-gray-900 leading-tight">Alexsandra Tavares</h2>
-            <p class="text-xs text-gray-500 font-mono">Eng. de Software & Cibersegurança</p>
-          </div>
+        <!-- Global Progress Bar Header -->
+        <div class="w-full bg-gray-100 h-2">
+            <div id="global-progress-bar" class="bg-gradient-to-r from-google-blue via-google-yellow to-google-green h-full transition-all duration-500 ease-out" style="width: 0%"></div>
         </div>
-        <div class="mt-3 pt-3 border-t border-blue-100/80 flex justify-between items-center text-xs">
-          <span class="text-gray-600 font-medium">Status no Programa:</span>
-          <span class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-bold">Ativa & Engajada</span>
-        </div>
-      </div>
+    </header>
 
-      <!-- Barra de Progresso Geral -->
-      <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-xs font-bold uppercase tracking-wider text-gray-500">Progresso Geral</span>
-          <span id="progress-percent" class="text-sm font-bold text-blue-600 font-google">0%</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
-          <div id="progress-bar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-green-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
-        </div>
-        <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
-          <span id="tasks-count">0 / 0 concluídas</span>
-          <span id="total-points-badge" class="font-semibold text-emerald-600 font-google">0 pts</span>
-        </div>
-      </div>
-
-      <!-- Certificados Oficiais -->
-      <div class="flex flex-col gap-2">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Certificações Obtidas</h3>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <div onclick="openCertModal('Boas-Vindas', '21/08/2026', '1 hora', 'Carla Arena (Amplifica / Google for Education)')" class="p-2.5 bg-white border border-gray-200 hover:border-blue-400 rounded-lg cursor-pointer transition flex items-center justify-between group">
-          <div class="flex items-center space-x-2">
-            <span class="text-base">🎓</span>
-            <span class="text-xs font-medium text-gray-700 group-hover:text-blue-600">Encontro Boas-Vindas</span>
-          </div>
-          <span class="text-[10px] text-gray-400 font-mono">21/08</span>
-        </div>
+        <!-- Sidebar Esquerda -->
+        <aside class="lg:col-span-4 space-y-6">
+            
+            <!-- Card de Progresso Geral -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Progresso Geral</h2>
+                        <div class="flex items-baseline gap-2 mt-1">
+                            <span id="global-percentage" class="text-3xl font-extrabold text-gray-900">0%</span>
+                            <span id="global-counter" class="text-xs text-gray-500">0 de 0 tarefas</span>
+                        </div>
+                    </div>
+                    <span class="text-2xl" id="progress-icon">🚀</span>
+                </div>
 
-        <div onclick="openCertModal('Sessão 2: Canvas com Banco de Dados', '04/09/2026', '30 min', 'Carla Arena (Amplifica / Google for Education)')" class="p-2.5 bg-white border border-gray-200 hover:border-blue-400 rounded-lg cursor-pointer transition flex items-center justify-between group">
-          <div class="flex items-center space-x-2">
-            <span class="text-base">💾</span>
-            <span class="text-xs font-medium text-gray-700 group-hover:text-blue-600">Sessão 2: Canvas BD</span>
-          </div>
-          <span class="text-[10px] text-gray-400 font-mono">04/09</span>
-        </div>
+                <div class="w-full bg-gray-100 rounded-full h-3 mb-4 overflow-hidden">
+                    <div id="sidebar-progress" class="bg-google-blue h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
 
-        <div onclick="openCertModal('Sessão 3: Visualizações Interativas', '10/09/2026', '30 min', 'Carla Arena (Amplifica / Google for Education)')" class="p-2.5 bg-white border border-gray-200 hover:border-blue-400 rounded-lg cursor-pointer transition flex items-center justify-between group">
-          <div class="flex items-center space-x-2">
-            <span class="text-base">🚀</span>
-            <span class="text-xs font-medium text-gray-700 group-hover:text-blue-600">Sessão 3: Interatividade</span>
-          </div>
-          <span class="text-[10px] text-gray-400 font-mono">10/09</span>
-        </div>
-      </div>
-
-      <!-- Links Rápidos e Recursos -->
-      <div class="flex flex-col gap-2 mt-auto pt-4 border-t border-gray-200">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Recursos Centrais</h3>
-        <a href="https://mural-embaixadores-br.web.app" target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1">
-          <span>📌</span> Mural Acadêmico Oficial
-        </a>
-        <a href="https://forms.gle/eCRnbw5eJZsfYC7X6" target="_blank" class="text-xs text-red-600 hover:underline flex items-center gap-1 font-medium">
-          <span>🏁</span> Checkout Semana 3 (Até 18/09)
-        </a>
-        <a href="https://amplifica.me/bibliotecaprompts" target="_blank" class="text-xs text-gray-600 hover:underline flex items-center gap-1">
-          <span>📚</span> Biblioteca de Prompts
-        </a>
-      </div>
-
-    </aside>
-
-    <!-- Conteúdo Principal -->
-    <main class="flex-1 p-4 lg:p-8 overflow-y-auto custom-scrollbar">
-      
-      <!-- Seletor de Filtro de Semana -->
-      <div class="flex flex-wrap gap-2 mb-6 items-center border-b border-gray-200 pb-3">
-        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2">Filtrar:</span>
-        <button onclick="filterWeek('all')" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-blue-600 text-white shadow-sm" data-target="all">Todas</button>
-        <button onclick="filterWeek('w0')" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 hover:bg-gray-100" data-target="w0">Boas-Vindas</button>
-        <button onclick="filterWeek('w1')" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 hover:bg-gray-100" data-target="w1">Semana 1</button>
-        <button onclick="filterWeek('w2')" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 hover:bg-gray-100" data-target="w2">Semana 2</button>
-        <button onclick="filterWeek('w3')" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 hover:bg-gray-100" data-target="w3">Semana 3</button>
-        <button onclick="filterWeek('w4')" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 hover:bg-gray-100" data-target="w4">Semana 4</button>
-      </div>
-
-      <div class="space-y-8">
-
-        <!-- ================= SEMANA 4 ================= -->
-        <section id="section-w4" class="week-section">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-[#EA4335]"></span> Semana 4: Minha Rotina em Ordem & Masterclass
-              </h2>
-              <p class="text-xs text-gray-500">14/09 a 20/09/2026 • Foco: Repertório de Gestão Acadêmica e Inteligência Criativa</p>
+                <div class="space-y-2.5 pt-2 border-t border-gray-100 text-xs text-gray-600 font-medium">
+                    <div class="flex justify-between items-center" id="stat-boas-vindas">
+                        <span>Boas-vindas</span>
+                        <span class="font-bold text-gray-800">0%</span>
+                    </div>
+                    <div class="flex justify-between items-center" id="stat-semana1">
+                        <span>Semana 1 (Study Notebook)</span>
+                        <span class="font-bold text-gray-800">0%</span>
+                    </div>
+                    <div class="flex justify-between items-center" id="stat-semana2">
+                        <span>Semana 2 (Canvas & DB)</span>
+                        <span class="font-bold text-gray-800">0%</span>
+                    </div>
+                    <div class="flex justify-between items-center" id="stat-semana3">
+                        <span>Semana 3 (Simuladores & Check-out)</span>
+                        <span class="font-bold text-gray-800">0%</span>
+                    </div>
+                    <div class="flex justify-between items-center" id="stat-semana4">
+                        <span>Semana 4 (Mural, Rotina & Masterclass)</span>
+                        <span class="font-bold text-gray-800">0%</span>
+                    </div>
+                </div>
             </div>
-            <span id="badge-w4" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200">Em Andamento</span>
-          </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-            <!-- Card Desafio #02 da Semana 4 (Mural) -->
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:border-gray-300 transition flex flex-col justify-between">
-              <div>
-                <div class="flex items-start justify-between">
-                  <div class="flex items-center gap-2">
-                    <span class="text-xl">📚</span>
-                    <h3 class="font-bold text-gray-900 text-sm">Desafio #02: Mural de Organização da Vida Acadêmica</h3>
-                  </div>
-                  <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+25 pts</span>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm">
+                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider px-2 mb-2">Filtro de Navegação</h3>
+                <div class="flex flex-col gap-1 text-sm font-medium">
+                    <button onclick="filterTimeline('all')" id="tab-all" class="nav-btn w-full text-left px-3 py-2 rounded-xl bg-blue-50 text-google-blue flex items-center justify-between transition">
+                        <span><i class="fa-solid fa-list-check mr-2"></i> Ver Todas as Semanas</span>
+                        <span class="text-xs bg-white px-2 py-0.5 rounded-full shadow-sm text-gray-700" id="badge-all-count">0</span>
+                    </button>
+                    <button onclick="filterTimeline('boas-vindas')" id="tab-boas-vindas" class="nav-btn w-full text-left px-3 py-2 rounded-xl hover:bg-gray-50 text-gray-700 flex items-center justify-between transition">
+                        <span><i class="fa-solid fa-hand-wave mr-2 text-google-blue"></i> Boas-vindas (17/07 a 23/08)</span>
+                    </button>
+                    <button onclick="filterTimeline('semana1')" id="tab-semana1" class="nav-btn w-full text-left px-3 py-2 rounded-xl hover:bg-gray-50 text-gray-700 flex items-center justify-between transition">
+                        <span><i class="fa-solid fa-book-sparkles mr-2 text-google-red"></i> Semana 1 (24/08 a 30/08)</span>
+                    </button>
+                    <button onclick="filterTimeline('semana2')" id="tab-semana2" class="nav-btn w-full text-left px-3 py-2 rounded-xl hover:bg-gray-50 text-gray-700 flex items-center justify-between transition">
+                        <span><i class="fa-solid fa-database mr-2 text-google-yellow"></i> Semana 2 (31/08 a 06/09)</span>
+                    </button>
+                    <button onclick="filterTimeline('semana3')" id="tab-semana3" class="nav-btn w-full text-left px-3 py-2 rounded-xl hover:bg-gray-50 text-gray-700 flex items-center justify-between transition">
+                        <span><i class="fa-solid fa-microchip mr-2 text-google-green"></i> Semana 3 (07/09 a 13/09)</span>
+                    </button>
+                    <button onclick="filterTimeline('semana4')" id="tab-semana4" class="nav-btn w-full text-left px-3 py-2 rounded-xl hover:bg-gray-50 text-gray-700 flex items-center justify-between transition">
+                        <span><i class="fa-solid fa-calendar-check mr-2 text-purple-600"></i> Semana 4 (14/09 a 20/09)</span>
+                    </button>
                 </div>
-                <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                  Colocar o repertório de rotina acadêmica para circular e trocar experiências no mural coletivo dos embaixadores.
-                </p>
+            </div>
 
-                <div class="mt-4 space-y-2.5 border-t border-gray-100 pt-3">
-                  <label class="flex items-start gap-2 cursor-pointer">
-                    <input type="checkbox" id="w4_t1_passo1" onchange="toggleTask('w4_t1_passo1')" class="task-checkbox mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
-                    <span class="text-xs text-gray-700"><strong>Passo 1:</strong> Publicar dica no mural (qual é a dica e como o Gemini ajuda).</span>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer">
-                    <input type="checkbox" id="w4_t1_passo2" onchange="toggleTask('w4_t1_passo2')" class="task-checkbox mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
-                    <span class="text-xs text-gray-700"><strong>Passo 2:</strong> Explorar contribuições e anotar soluções aplicáveis à sua rotina.</span>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer">
-                    <input type="checkbox" id="w4_t1_print" onchange="toggleTask('w4_t1_print')" class="task-checkbox mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
-                    <span class="text-xs text-gray-700 font-semibold text-amber-700"><strong>Evidência:</strong> Salvar o print da postagem da dica para o Checkout.</span>
-                  </label>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Certificados Oficiais</h4>
+                    <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">3 Validados</span>
                 </div>
-              </div>
 
-              <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
-                <a href="https://mural-embaixadores-br.web.app" target="_blank" class="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
-                  Acessar Mural Oficial ↗
-                </a>
-                <button onclick="openPromptModal('w4_mural')" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2.5 py-1 rounded font-medium transition">
-                  Ver Roteiro da Dica
+                <div onclick="openCertDetails('bv')" class="p-2.5 bg-gray-50 hover:bg-blue-50/50 border border-gray-200 hover:border-blue-300 rounded-xl cursor-pointer transition flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">🎓</span>
+                        <div>
+                            <span class="text-xs font-bold text-gray-800 block">Encontro de Boas-Vindas</span>
+                            <span class="text-[10px] text-gray-500">21/08/2026 • 1 hora</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </div>
+
+                <div onclick="openCertDetails('s2')" class="p-2.5 bg-gray-50 hover:bg-blue-50/50 border border-gray-200 hover:border-blue-300 rounded-xl cursor-pointer transition flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">💾</span>
+                        <div>
+                            <span class="text-xs font-bold text-gray-800 block">Canvas com Banco de Dados</span>
+                            <span class="text-[10px] text-gray-500">04/09/2026 • 30 min</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </div>
+
+                <div onclick="openCertDetails('s3')" class="p-2.5 bg-gray-50 hover:bg-blue-50/50 border border-gray-200 hover:border-blue-300 rounded-xl cursor-pointer transition flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">🚀</span>
+                        <div>
+                            <span class="text-xs font-bold text-gray-800 block">Sessão Gemini 3: Interatividade</span>
+                            <span class="text-[10px] text-gray-500">10/09/2026 • 30 min</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm space-y-2">
+                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Acessar em Outros Aparelhos</h4>
+                <p class="text-[11px] text-gray-500 leading-relaxed">Exporte o progresso salvo para importar no celular ou em outro computador.</p>
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                    <button onclick="exportProgressData()" class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-gray-300 text-xs font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-1 transition">
+                        <i class="fa-solid fa-download text-google-blue"></i> Exportar
+                    </button>
+                    <label class="px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-gray-300 text-xs font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-1 transition cursor-pointer text-center">
+                        <i class="fa-solid fa-upload text-google-green"></i> Importar
+                        <input type="file" id="import-file" class="hidden" accept=".json" onchange="importProgressData(event)">
+                    </label>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="resetAllTasks()" class="text-xs text-gray-400 hover:text-red-500 transition underline">
+                    Redefinir todas as caixas de seleção
                 </button>
-              </div>
             </div>
+        </aside>
 
-            <!-- Card Masterclass Pompeu IA -->
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:border-gray-300 transition flex flex-col justify-between">
-              <div>
-                <div class="flex items-start justify-between">
-                  <div class="flex items-center gap-2">
-                    <span class="text-xl">🎬</span>
-                    <h3 class="font-bold text-gray-900 text-sm">Masterclass Pompeu IA: Gemini Omni para Vídeos</h3>
-                  </div>
-                  <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+20 pts</span>
+        <section class="lg:col-span-8 space-y-8" id="timeline-container">
+            
+            <!-- ETAPA: Boas-vindas -->
+            <div class="week-section bg-white rounded-2xl border border-gray-200 shadow-sm p-6 transition-all" id="section-boas-vindas" data-week="boas-vindas">
+                <div class="flex flex-wrap items-center justify-between border-b border-gray-100 pb-4 mb-4 gap-2">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-google-blue">Etapa 0</span>
+                            <h3 class="text-base font-bold text-gray-900">Boas-vindas & Onboarding</h3>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-0.5">Período: 17/07 a 23/08 • Conexão inicial com o programa</p>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 flex items-center gap-1.5">
+                        <span class="status-dot w-2 h-2 rounded-full bg-gray-400"></span>
+                        <span class="status-text">Em andamento</span>
+                    </div>
                 </div>
-                <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                  Realizada em 16/09/2026. Conceito central de Inteligência Híbrida e fluxo de 9 etapas da ideação humana à renderização.
-                </p>
 
-                <div class="mt-4 space-y-2.5 border-t border-gray-100 pt-3">
-                  <label class="flex items-start gap-2 cursor-pointer">
-                    <input type="checkbox" id="w4_mc_presenca" onchange="toggleTask('w4_mc_presenca')" class="task-checkbox mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
-                    <span class="text-xs text-gray-700 font-medium">Presença confirmada / Resumo da Masterclass estudado.</span>
-                  </label>
-                  <label class="flex items-start gap-2 cursor-pointer">
-                    <input type="checkbox" id="w4_mc_gems" onchange="toggleTask('w4_mc_gems')" class="task-checkbox mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
-                    <span class="text-xs text-gray-700">Testar Gems Oficiais (Vídeo & Imagem) e Modo de Voz para Brainstorming.</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
-                <button onclick="openModal('modal-resumo-masterclass')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
-                  📖 Abrir Resumo Completo
-                </button>
-                <button onclick="openModal('modal-gems')" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded font-medium transition">
-                  Links dos Gems
-                </button>
-              </div>
-            </div>
-
-            <!-- Card Desafio #01 da Semana 4 (Minha Rotina em Ordem) -->
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:border-gray-300 transition flex flex-col justify-between md:col-span-2">
-              <div>
-                <div class="flex items-start justify-between">
-                  <div class="flex items-center gap-2">
-                    <span class="text-xl">🧩</span>
-                    <h3 class="font-bold text-gray-900 text-sm">Desafio #01: Minha Rotina em Ordem (Workflow em 4 Etapas)</h3>
-                  </div>
-                  <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+25 pts</span>
-                </div>
-                <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                  Utilização do Gemini para descarregar a carga mental, categorizar prioridades e derivar planos acionáveis de 7 dias integrados às ferramentas do Google Workspace.
-                </p>
-
-                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                  <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <label class="flex items-center gap-2 cursor-pointer mb-2">
-                      <input type="checkbox" id="w4_e1" onchange="toggleTask('w4_e1')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                      <span class="text-xs font-bold text-gray-800">Etapa 1: Brain Dump</span>
+                <div class="space-y-3" id="tasks-boas-vindas">
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-bv-1" class="task-checkbox mt-1 w-4 h-4 text-google-blue rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Apresentação no Grupo de Embaixadores</span>
+                                <button type="button" onclick="openModal('bv-1')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-terminal"></i> Ver Apresentação
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Apresentar trajetória (Pedagogia/Neuropsicopedagogia migrando para Eng. de Software/Cibersegurança) com avatar gerado por IA.</p>
+                        </div>
                     </label>
-                    <p class="text-[11px] text-gray-500 mb-2 leading-snug">Esvaziar todas as pendências sem formatação.</p>
-                    <button onclick="openPromptModal('w4_etapa1')" class="text-[10px] text-blue-600 hover:underline font-medium">Ver Prompt ↗</button>
-                  </div>
 
-                  <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <label class="flex items-center gap-2 cursor-pointer mb-2">
-                      <input type="checkbox" id="w4_e2" onchange="toggleTask('w4_e2')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                      <span class="text-xs font-bold text-gray-800">Etapa 2: Categorizar</span>
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-bv-2" class="task-checkbox mt-1 w-4 h-4 text-google-blue rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Ativação do Google AI Plus (1 Ano Grátis)</span>
+                                <button type="button" onclick="openModal('bv-2')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-circle-info"></i> Ver Instruções
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Resgatar o benefício universitário com a conta acadêmica e preparar o ambiente para os recursos avançados do Gemini.</p>
+                        </div>
                     </label>
-                    <p class="text-[11px] text-gray-500 mb-2 leading-snug">Classificar em fixos, entregas e pendências.</p>
-                    <button onclick="openPromptModal('w4_etapa2')" class="text-[10px] text-blue-600 hover:underline font-medium">Ver Prompt ↗</button>
-                  </div>
+                </div>
+            </div>
 
-                  <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <label class="flex items-center gap-2 cursor-pointer mb-2">
-                      <input type="checkbox" id="w4_e3" onchange="toggleTask('w4_e3')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                      <span class="text-xs font-bold text-gray-800">Etapa 3: Priorizar</span>
+            <div class="week-section bg-white rounded-2xl border border-gray-200 shadow-sm p-6 transition-all" id="section-semana1" data-week="semana1">
+                <div class="flex flex-wrap items-center justify-between border-b border-gray-100 pb-4 mb-4 gap-2">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-google-red">Semana 1</span>
+                            <h3 class="text-base font-bold text-gray-900">Sessão Gemini: Study Notebook & Auditoria</h3>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-0.5">Período: 24/08 a 30/08 • Exploração de fontes confiáveis e prompts de estudo</p>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 flex items-center gap-1.5">
+                        <span class="status-dot w-2 h-2 rounded-full bg-gray-400"></span>
+                        <span class="status-text">Em andamento</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3" id="tasks-semana1">
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-red-200 hover:bg-red-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s1-1" class="task-checkbox mt-1 w-4 h-4 text-google-red rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Desafio #01: Auditoria e Refinamento de Prompt</span>
+                                <button type="button" onclick="openModal('s1-1')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-terminal"></i> Ver Prompt
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Transformar um prompt genérico de plano de estudos em uma instrução adaptativa com validação socrática de dúvidas.</p>
+                        </div>
                     </label>
-                    <p class="text-[11px] text-gray-500 mb-2 leading-snug">Critérios de impacto, esforço e prazos.</p>
-                    <button onclick="openPromptModal('w4_etapa3')" class="text-[10px] text-blue-600 hover:underline font-medium">Ver Prompt ↗</button>
-                  </div>
 
-                  <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <label class="flex items-center gap-2 cursor-pointer mb-2">
-                      <input type="checkbox" id="w4_e4" onchange="toggleTask('w4_e4')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                      <span class="text-xs font-bold text-gray-800">Etapa 4: Agir (7 Dias)</span>
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-red-200 hover:bg-red-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s1-2" class="task-checkbox mt-1 w-4 h-4 text-google-red rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Desafio #01 de Impacto: Meu Mapa de Impacto</span>
+                                <button type="button" onclick="openModal('s1-2')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-terminal"></i> Ver Estrutura
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Mapeamento em 3 níveis: Meu Grupo (CTF & mentoria), Minha Instituição (alunos tech) e Minha Comunidade (acessibilidade & idosos).</p>
+                        </div>
                     </label>
-                    <p class="text-[11px] text-gray-500 mb-2 leading-snug">Passos no Google Agenda, Keep e Tarefas.</p>
-                    <button onclick="openPromptModal('w4_etapa4')" class="text-[10px] text-blue-600 hover:underline font-medium">Ver Prompt ↗</button>
-                  </div>
+
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-red-200 hover:bg-red-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s1-3" class="task-checkbox mt-1 w-4 h-4 text-google-red rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Presença Digital: Carrossel no LinkedIn sobre Study Notebook</span>
+                                <a href="https://lnkd.in/p/dW947rSw" target="_blank" onclick="event.stopPropagation()" class="text-xs text-blue-600 hover:underline font-medium">
+                                    <i class="fa-brands fa-linkedin"></i> Ver Publicação
+                                </a>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Reflexão publicada sobre o uso de múltiplas fontes confiáveis e síntese de guias de estudo no ecossistema Gemini.</p>
+                        </div>
+                    </label>
                 </div>
-              </div>
             </div>
 
-          </div>
+            <div class="week-section bg-white rounded-2xl border border-gray-200 shadow-sm p-6 transition-all" id="section-semana2" data-week="semana2">
+                <div class="flex flex-wrap items-center justify-between border-b border-gray-100 pb-4 mb-4 gap-2">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">Semana 2</span>
+                            <h3 class="text-base font-bold text-gray-900">Sessão Gemini 2: Gemini Canvas com Banco de Dados</h3>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-0.5">Período: 31/08 a 06/09 • Coleta de dados com a comunidade e Canvas Pro</p>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 flex items-center gap-1.5">
+                        <span class="status-dot w-2 h-2 rounded-full bg-gray-400"></span>
+                        <span class="status-text">Em andamento</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3" id="tasks-semana2">
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-amber-200 hover:bg-amber-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s2-1" class="task-checkbox mt-1 w-4 h-4 text-google-yellow rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Desafio #2: Embaixador em Campo & Radar de Oportunidades</span>
+                                <button type="button" onclick="openModal('s2-1')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-terminal"></i> Ver Diagnóstico
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Entrevistar 24 pessoas da comunidade acadêmica e mapear gargalos de busca de informação e sobrecarga de tarefas manuais.</p>
+                        </div>
+                    </label>
+
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-amber-200 hover:bg-amber-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s2-2" class="task-checkbox mt-1 w-4 h-4 text-google-yellow rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Desafio da Semana #2: Gemini Canvas Pro no LinkedIn</span>
+                                <a href="https://lnkd.in/p/dqGC9RsY" target="_blank" onclick="event.stopPropagation()" class="text-xs text-blue-600 hover:underline font-medium">
+                                    <i class="fa-brands fa-linkedin"></i> Ver Publicação
+                                </a>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Protótipo divulgado: Central Cognitiva de Manuais e Procedimentos Acadêmicos com dados estruturados.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="week-section bg-white rounded-2xl border border-gray-200 shadow-sm p-6 transition-all" id="section-semana3" data-week="semana3">
+                <div class="flex flex-wrap items-center justify-between border-b border-gray-100 pb-4 mb-4 gap-2">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-google-green">Semana 3</span>
+                            <h3 class="text-base font-bold text-gray-900">Sessão Gemini 3: Visualizações Interativas & Compartilhamento</h3>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-0.5">Período: 07/09 a 13/09 • <strong>Prazo do Check-out: até sexta-feira (18/09) às 23h59</strong></p>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 flex items-center gap-1.5">
+                        <span class="status-dot w-2 h-2 rounded-full bg-gray-400"></span>
+                        <span class="status-text">Em andamento</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3" id="tasks-semana3">
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-green-200 hover:bg-green-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s3-simulador" class="task-checkbox mt-1 w-4 h-4 text-google-green rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Simulador DevSecOps Pipeline Lab no Canvas</span>
+                                <a href="https://lnkd.in/p/dEamky22" target="_blank" onclick="event.stopPropagation()" class="text-xs text-blue-600 hover:underline font-medium">
+                                    <i class="fa-brands fa-linkedin"></i> Ver no LinkedIn
+                                </a>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Simulador interativo de CI/CD com controles de segurança (Fail Fast, Quality Gate, SAST, Container Hardening).</p>
+                        </div>
+                    </label>
+
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-green-200 hover:bg-green-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s3-video" class="task-checkbox mt-1 w-4 h-4 text-google-green rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800">Ação de Impacto: Minha Semana em Vídeo (+40 pts)</span>
+                                <button type="button" onclick="openModal('s3-video')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-video"></i> Ver as 3 Rotas
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Vídeo com Gemini Omni publicado nas redes sociais com a hashtag oficial <code>#EmbaixadoresEstudantisGoogle</code>.</p>
+                        </div>
+                    </label>
+
+                    <!-- Check-out da Semana 3 -->
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-amber-200 bg-amber-50/30 hover:bg-amber-50/60 cursor-pointer transition">
+                        <input type="checkbox" id="task-s3-checkout" class="task-checkbox mt-1 w-4 h-4 text-amber-600 rounded border-amber-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-bold text-amber-900 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-flag-checkered text-amber-600"></i> Check-out da Semana 3 (Até 150 pts)
+                                </span>
+                                <a href="https://forms.gle/eCRnbw5eJZsfYC7X6" target="_blank" onclick="event.stopPropagation()" class="px-2.5 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center gap-1 shadow-sm transition">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Formulário
+                                </a>
+                            </div>
+                            <p class="text-xs text-amber-800 mt-1 font-medium">Prazo limite: até <strong>sexta-feira (18/09) às 23h59</strong> (horário de Brasília). Submeter prints dos Desafios #01, #02 e até 2 Ações de Impacto.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="week-section bg-white rounded-2xl border border-gray-200 shadow-sm p-6 transition-all" id="section-semana4" data-week="semana4">
+                <div class="flex flex-wrap items-center justify-between border-b border-gray-100 pb-4 mb-4 gap-2">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-700">Semana 4</span>
+                            <h3 class="text-base font-bold text-gray-900">Semana 4: Minha Rotina em Ordem & Masterclass Pompeu</h3>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-0.5">Período: 14/09 a 20/09 • Mural Acadêmico e Inteligência Criativa Híbrida</p>
+                    </div>
+                    <div class="status-badge px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 flex items-center gap-1.5">
+                        <span class="status-dot w-2 h-2 rounded-full bg-gray-400"></span>
+                        <span class="status-text">Em andamento</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3" id="tasks-semana4">
+                    
+                    <!-- Desafio #02 Semana 4 (Mural) -->
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-purple-200 bg-purple-50/20 hover:bg-purple-50/50 cursor-pointer transition">
+                        <input type="checkbox" id="task-s4-mural" class="task-checkbox mt-1 w-4 h-4 text-purple-600 rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-bold text-gray-900 flex items-center gap-1.5">
+                                    <span>📚</span> Desafio #02: Mural de Organização da Vida Acadêmica (+25 pts)
+                                </span>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="openModal('s4-mural')" class="text-xs text-google-blue hover:underline font-medium">
+                                        <i class="fa-solid fa-circle-question"></i> Ver Roteiro
+                                    </button>
+                                    <a href="https://mural-embaixadores-br.web.app" target="_blank" onclick="event.stopPropagation()" class="px-2 py-0.5 rounded bg-purple-600 text-white text-xs font-semibold hover:bg-purple-700 transition">
+                                        Mural ↗
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-1">Postar sua dica de rotina no mural coletivo (Qual é a dica? Como o Gemini ajuda?) e guardar o print da evidência para o check-out.</p>
+                        </div>
+                    </label>
+
+                    <!-- Masterclass Pompeu IA -->
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-purple-200 hover:bg-purple-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s4-masterclass" class="task-checkbox mt-1 w-4 h-4 text-purple-600 rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800 flex items-center gap-1.5">
+                                    <span>🎬</span> Masterclass #01 com Otávio Pompeu: Gemini Omni (+20 pts)
+                                </span>
+                                <button type="button" onclick="openModal('s4-masterclass')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-sparkles"></i> Ver Resumo & Gems
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Estudo do workflow híbrido de 9 etapas, interpolação de keyframes para vídeos e teste dos Gems oficiais de Imagem e Vídeo.</p>
+                        </div>
+                    </label>
+
+                    <!-- Desafio #01: 4 Etapas da Rotina em Ordem -->
+                    <label class="task-card flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 hover:border-purple-200 hover:bg-purple-50/20 cursor-pointer transition">
+                        <input type="checkbox" id="task-s4-rotina" class="task-checkbox mt-1 w-4 h-4 text-purple-600 rounded border-gray-300" onchange="updateProgress()">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="task-title text-sm font-semibold text-gray-800 flex items-center gap-1.5">
+                                    <span>🧩</span> Desafio #01: Minha Rotina em Ordem (Workflow 4 Etapas)
+                                </span>
+                                <button type="button" onclick="openModal('s4-rotina')" class="text-xs text-google-blue hover:underline font-medium">
+                                    <i class="fa-solid fa-terminal"></i> Ver 4 Prompts
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Brain dump, categorização, priorização e plano acionável de 7 dias integrado ao Google Agenda, Keep, Docs e Tarefas.</p>
+                        </div>
+                    </label>
+
+                </div>
+            </div>
+
         </section>
-
-        <!-- ================= SEMANA 3 ================= -->
-        <section id="section-w3" class="week-section">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-[#FBBC05]"></span> Semana 3: Visualizações Interativas & Check-out
-              </h2>
-              <p class="text-xs text-gray-500">07/09 a 13/09/2026 • Prazo do Check-out: até 18/09 às 23:59</p>
-            </div>
-            <span id="badge-w3" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 border border-blue-200">Check-out Aberto</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm flex flex-col justify-between">
-              <div>
-                <div class="flex items-start justify-between">
-                  <h3 class="font-bold text-gray-900 text-sm">Simulador DevSecOps</h3>
-                  <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+25 pts</span>
-                </div>
-                <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                  Criação do simulador interativo de pipeline CI/CD com Quality Gates e Shift-Left no Gemini Canvas.
-                </p>
-                <div class="mt-4 pt-3 border-t border-gray-100">
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="w3_simulador" onchange="toggleTask('w3_simulador')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                    <span class="text-xs text-gray-700 font-medium">Concluído & Testado</span>
-                  </label>
-                </div>
-              </div>
-              <div class="mt-4 pt-3 border-t border-gray-100">
-                <a href="https://lnkd.in/p/dEamky22" target="_blank" class="text-xs text-blue-600 hover:underline">Ver Vídeo no LinkedIn ↗</a>
-              </div>
-            </div>
-
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm flex flex-col justify-between">
-              <div>
-                <div class="flex items-start justify-between">
-                  <h3 class="font-bold text-gray-900 text-sm">Vídeo com Gemini Omni</h3>
-                  <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+40 pts</span>
-                </div>
-                <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                  Publicação em vídeo nas redes sociais sobre o aprendizado da semana usando a hashtag oficial.
-                </p>
-                <div class="mt-4 pt-3 border-t border-gray-100">
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="w3_video" onchange="toggleTask('w3_video')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                    <span class="text-xs text-gray-700 font-medium">Publicado com #EmbaixadoresEstudantisGoogle</span>
-                  </label>
-                </div>
-              </div>
-              <div class="mt-4 pt-3 border-t border-gray-100">
-                <button onclick="openPromptModal('w3_rotas')" class="text-xs text-gray-600 hover:underline">Ver as 3 Rotas de Vídeo</button>
-              </div>
-            </div>
-
-            <div class="bg-gradient-to-br from-red-50 to-orange-50 border border-red-200 rounded-xl p-5 shadow-sm flex flex-col justify-between">
-              <div>
-                <div class="flex items-start justify-between">
-                  <h3 class="font-bold text-red-900 text-sm">Check-out da Semana 3</h3>
-                  <span class="text-[10px] font-bold text-red-700 bg-red-100 px-1.5 py-0.5 rounded uppercase">Até 18/09</span>
-                </div>
-                <p class="text-xs text-red-700 mt-2 leading-relaxed">
-                  Envio formal das evidências (print do desafio no grupo, print do simulador e link do post). Vale até 150 pts totais.
-                </p>
-                <div class="mt-4 pt-3 border-t border-red-100">
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="w3_checkout" onchange="toggleTask('w3_checkout')" class="task-checkbox h-4 w-4 rounded text-red-600">
-                    <span class="text-xs text-red-900 font-bold">Formulário Preenchido & Enviado</span>
-                  </label>
-                </div>
-              </div>
-              <div class="mt-4 pt-3 border-t border-red-200">
-                <a href="https://forms.gle/eCRnbw5eJZsfYC7X6" target="_blank" class="block text-center text-xs font-bold text-white bg-red-600 hover:bg-red-700 py-1.5 rounded transition">
-                  Abrir Formulário Oficial ↗
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- ================= SEMANA 2 ================= -->
-        <section id="section-w2" class="week-section">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-[#34A853]"></span> Semana 2: Gemini Canvas com Banco de Dados
-              </h2>
-              <p class="text-xs text-gray-500">31/08 a 06/09/2026</p>
-            </div>
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-100 text-green-800 border border-green-200">Concluída</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
-              <div class="flex items-start justify-between">
-                <h3 class="font-bold text-gray-900 text-sm">Missão Embaixador em Campo (Escuta Ativa)</h3>
-                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+25 pts</span>
-              </div>
-              <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                Entrevista com 24 pessoas do ecossistema acadêmico para mapear gargalos operacionais e organização de rotinas.
-              </p>
-              <div class="mt-4 pt-3 border-t border-gray-100">
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" id="w2_campo" onchange="toggleTask('w2_campo')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                  <span class="text-xs text-gray-700 font-medium">Coleta de dados e síntese realizada</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
-              <div class="flex items-start justify-between">
-                <h3 class="font-bold text-gray-900 text-sm">Sessão 2 Ao Vivo & Check-out Semana 2</h3>
-                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+20 pts</span>
-              </div>
-              <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                Participação ao vivo com certificado gerado e formulário preenchido dentro do prazo regular.
-              </p>
-              <div class="mt-4 pt-3 border-t border-gray-100">
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" id="w2_checkout" onchange="toggleTask('w2_checkout')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                  <span class="text-xs text-gray-700 font-medium">Check-out Semana 2 Enviado</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ================= SEMANA 1 & BOAS-VINDAS ================= -->
-        <section id="section-w1" class="week-section">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-[#4285F4]"></span> Boas-Vindas & Semana 1: Study Notebooks
-              </h2>
-              <p class="text-xs text-gray-500">17/07 a 30/08/2026</p>
-            </div>
-            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-100 text-green-800 border border-green-200">Concluída</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
-              <div class="flex items-start justify-between">
-                <h3 class="font-bold text-gray-900 text-sm">Auditoria de Prompt & Carrossel LinkedIn</h3>
-                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+40 pts</span>
-              </div>
-              <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                Refinamento do prompt de cronograma de estudos e publicação sobre Study Notebooks.
-              </p>
-              <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" id="w1_post" onchange="toggleTask('w1_post')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                  <span class="text-xs text-gray-700 font-medium">Post e Desafio #01 Concluídos</span>
-                </label>
-                <a href="https://lnkd.in/p/dW947rSw" target="_blank" class="text-xs text-blue-600 hover:underline">Ver Post ↗</a>
-              </div>
-            </div>
-
-            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
-              <div class="flex items-start justify-between">
-                <h3 class="font-bold text-gray-900 text-sm">Mapa de Impacto Individual</h3>
-                <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">+25 pts</span>
-              </div>
-              <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                Elaboração do mapa centrado em Tecnologia, Acessibilidade, Idosos e Esportes.
-              </p>
-              <div class="mt-4 pt-3 border-t border-gray-100">
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" id="w1_mapa" onchange="toggleTask('w1_mapa')" class="task-checkbox h-4 w-4 rounded text-blue-600">
-                  <span class="text-xs text-gray-700 font-medium">Entregue no Grupo Oficial</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
     </main>
-  </div>
 
-  <!-- Modal Genérico / Prompts -->
-  <div id="modal-container" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-xl w-full p-6 max-h-[85vh] overflow-y-auto custom-scrollbar shadow-2xl">
-      <div class="flex justify-between items-start border-b border-gray-200 pb-3">
-        <h3 id="modal-title" class="font-bold text-gray-900 text-base">Título do Modal</h3>
-        <button onclick="closeModal('modal-container')" class="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">&times;</button>
-      </div>
-      <div id="modal-body" class="mt-4 text-xs text-gray-700 leading-relaxed space-y-3 font-sans">
-        <!-- Conteúdo Dinâmico -->
-      </div>
-      <div class="mt-6 pt-3 border-t border-gray-100 flex justify-end">
-        <button onclick="closeModal('modal-container')" class="px-4 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg transition">Fechar</button>
-      </div>
+    <!-- Modal Instruções & Prompts -->
+    <div id="instruction-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-gray-100 transition-transform transform scale-95 duration-200" id="modal-box">
+            <div class="flex justify-between items-start border-b border-gray-100 pb-4 mb-4">
+                <div>
+                    <span id="modal-tag" class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-google-blue">Módulo</span>
+                    <h3 id="modal-title" class="text-base font-bold text-gray-900 mt-1">Título da Atividade</h3>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar text-sm text-gray-600">
+                <div>
+                    <h5 class="font-bold text-gray-800 mb-1 text-xs uppercase tracking-wide">Instrução Passo a Passo:</h5>
+                    <div id="modal-desc" class="leading-relaxed"></div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <h5 class="font-bold text-gray-800 text-xs uppercase tracking-wide">Prompt / Conteúdo Estruturado:</h5>
+                        <button onclick="copyModalPrompt()" class="text-xs text-google-blue hover:underline flex items-center gap-1 font-medium">
+                            <i class="fa-regular fa-copy"></i> Copiar Texto
+                        </button>
+                    </div>
+                    <pre id="modal-code" class="bg-gray-900 text-gray-100 p-3.5 rounded-xl text-xs font-mono whitespace-pre-wrap leading-relaxed overflow-x-auto"></pre>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-2 text-sm font-semibold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition">Fechar</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Modal Tabela de Conquistas -->
-  <div id="modal-conquistas" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl">
-      <div class="flex justify-between items-start border-b border-gray-200 pb-3">
-        <h3 class="font-bold text-gray-900 text-base flex items-center gap-2">
-          <span>🏆</span> Tabela de Conquistas Oficial
-        </h3>
-        <button onclick="closeModal('modal-conquistas')" class="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">&times;</button>
-      </div>
-      <div class="mt-4 space-y-4 text-xs">
-        <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
-          <div class="flex justify-between font-bold text-blue-900">
-            <span>EU APRENDO</span>
-            <span>+20 PONTOS</span>
-          </div>
-          <p class="text-blue-700 mt-1">Presença em encontros ao vivo (Bate-Papo, Masterclass ou Sessões com Gemini).</p>
+    <!-- Modal Certificado -->
+    <div id="cert-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-gray-100 text-center">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-blue-50 text-google-blue flex items-center justify-center text-2xl mb-3">
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <h3 id="cert-title" class="text-base font-bold text-gray-900">Certificado Oficial</h3>
+            <p class="text-xs text-gray-500 mt-0.5">Conferido a <strong>Alexsandra Tavares</strong></p>
+
+            <div class="mt-4 p-4 bg-gray-50 rounded-2xl text-left text-xs space-y-2 border border-gray-100">
+                <p><strong>Emissor:</strong> Carla Arena (Diretora Executiva Amplifica / Google)</p>
+                <p><strong>Data:</strong> <span id="cert-date">--</span></p>
+                <p><strong>Carga Horária:</strong> <span id="cert-hours">--</span></p>
+                <p><strong>Pilar Oficial:</strong> <span class="text-emerald-700 font-bold">EU APRENDO (+20 Pontos)</span></p>
+            </div>
+
+            <button onclick="closeCertModal()" class="w-full mt-5 py-2.5 text-sm font-semibold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition">
+                Fechar
+            </button>
         </div>
-        <div class="p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-          <div class="flex justify-between font-bold text-emerald-900">
-            <span>EU APLICO</span>
-            <span>+25 PONTOS</span>
-          </div>
-          <p class="text-emerald-700 mt-1">Realização prática dos desafios semanais propostos na comunidade.</p>
-        </div>
-        <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 space-y-2">
-          <div class="font-bold text-amber-900">EU IMPACTO</div>
-          <div class="flex justify-between text-amber-800">
-            <span>Nível 1 (Publicação de participação no encontro)</span>
-            <span class="font-bold">+15 pts</span>
-          </div>
-          <div class="flex justify-between text-amber-800">
-            <span>Nível 2 (Conteúdo autoral ensinando algo novo)</span>
-            <span class="font-bold">+40 pts</span>
-          </div>
-          <div class="flex justify-between text-amber-800">
-            <span>Nível 3 (Mobilização na instituição / oficinas)</span>
-            <span class="font-bold">+100 pts</span>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Modal Resumo Masterclass Pompeu -->
-  <div id="modal-resumo-masterclass" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 max-h-[85vh] overflow-y-auto custom-scrollbar shadow-2xl">
-      <div class="flex justify-between items-start border-b border-gray-200 pb-3">
-        <h3 class="font-bold text-gray-900 text-base">Resumo Masterclass Pompeu IA — 16/09/2026</h3>
-        <button onclick="closeModal('modal-resumo-masterclass')" class="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">&times;</button>
-      </div>
-      <div class="mt-4 space-y-3 text-xs text-gray-700 leading-relaxed">
-        <p class="font-semibold text-gray-900">1. Conceito Central: Inteligência Híbrida</p>
-        <p>A combinação da automação da IA com a intenção humana. O roteiro escrito de forma deliberada define a qualidade; quanto mais contexto direcionado é oferecido, mais assertivo é o resultado.</p>
-        
-        <p class="font-semibold text-gray-900 mt-2">2. Workflow Híbrido em 9 Etapas</p>
-        <ul class="list-disc list-inside space-y-1 bg-gray-50 p-3 rounded-lg border border-gray-200">
-          <li><strong>Humano:</strong> 1. A Ideia | 2. Pesquisa | 3. Roteiro base | 9. Edição final</li>
-          <li><strong>Híbrido:</strong> 4. Direção Visual | 5. Prompts de imagem | 7. Prompts de vídeo</li>
-          <li><strong>IA:</strong> 6. Geração de imagens | 8. Geração de vídeos (Gemini Omni)</li>
-        </ul>
+    <!-- Modal Central de Deploy & Publicação -->
+    <div id="deploy-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[88vh] overflow-y-auto custom-scrollbar">
+            <div class="flex justify-between items-start border-b border-gray-100 pb-4 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-google-blue flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Como Abrir e Publicar seu Painel</h3>
+                        <p class="text-xs text-gray-500">Passo a passo definitivo para seu link funcionar online</p>
+                    </div>
+                </div>
+                <button onclick="closeDeployModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
 
-        <p class="font-semibold text-gray-900 mt-2">3. Melhores Práticas & Gemini Omni</p>
-        <p>• <strong>Interpolação de Keyframes:</strong> Trave a Imagem A (início) e Imagem B (fim) para o modelo calcular a física e a transição da cena.<br>
-        • <strong>Sonorização Nativa:</strong> Geração automatizada de ruídos de Foley sincronizados com o movimento gerado.<br>
-        • <strong>Controle de Texto:</strong> Para grafias em imagens, limite as palavras no prompt travando-as estritamente entre aspas.</p>
-      </div>
-    </div>
-  </div>
+            <!-- Por que o GitHub não abriu? -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-4 text-xs text-amber-900 leading-relaxed">
+                <div class="font-bold flex items-center gap-1.5 mb-1 text-sm text-amber-800">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Por que o link do GitHub não abriu antes?
+                </div>
+                <p>O GitHub Pages <strong>exige</strong> que o arquivo se chame exatamente <code class="bg-white px-1.5 py-0.5 rounded font-bold border border-amber-300">index.html</code> (em letras minúsculas). Se o arquivo estiver salvo com outro nome (como <em>painel.html</em> ou <em>dashboard.html</em>), o link dá erro 404 de página não encontrada!</p>
+            </div>
 
-  <!-- Modal Links dos Gems -->
-  <div id="modal-gems" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
-      <div class="flex justify-between items-start border-b border-gray-200 pb-3">
-        <h3 class="font-bold text-gray-900 text-base">Gems Oficiais da Masterclass</h3>
-        <button onclick="closeModal('modal-gems')" class="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">&times;</button>
-      </div>
-      <div class="mt-4 space-y-3 text-xs">
-        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <p class="font-bold text-gray-800">Gem de Vídeo Oficial:</p>
-          <a href="https://gemini.google.com/gem/1h7TAtudhhtMWahxr10HGCbNW6aBRqPT-" target="_blank" class="text-blue-600 hover:underline break-all font-mono text-[11px] mt-1 block">
-            gemini.google.com/gem/1h7TAtudhhtMWahxr10HGCbNW6aBRqPT-
-          </a>
+            <!-- Download index.html -->
+            <div class="bg-blue-50/70 border border-blue-100 rounded-2xl p-4 mb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div>
+                    <h4 class="text-xs font-bold text-google-blue uppercase tracking-wide">1. Baixar com o Nome Correto</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">Baixa este código pronto já nomeado como <code>index.html</code>.</p>
+                </div>
+                <button onclick="downloadHtmlFile()" class="px-4 py-2 bg-google-blue hover:bg-blue-600 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-sm transition shrink-0">
+                    <i class="fa-solid fa-download"></i> Baixar index.html
+                </button>
+            </div>
+
+            <!-- Como publicar no GitHub Pages -->
+            <div class="border border-gray-200 rounded-2xl p-4 text-xs text-gray-700 space-y-2">
+                <div class="font-bold text-sm text-gray-900 flex items-center gap-2">
+                    <i class="fa-brands fa-github text-base"></i> Publicar no GitHub Pages (Passo a Passo)
+                </div>
+                <ol class="list-decimal list-inside space-y-1.5 text-gray-600 pl-1 leading-relaxed">
+                    <li>No seu repositório do GitHub, certifique-se de que o arquivo se chama <strong>index.html</strong> na raiz.</li>
+                    <li>Clique na aba <strong>Settings</strong> (Configurações) no topo do repositório.</li>
+                    <li>No menu lateral esquerdo, clique em <strong>Pages</strong>.</li>
+                    <li>Em <em>Build and deployment</em> &gt; <em>Source</em>, selecione <strong>Deploy from a branch</strong>.</li>
+                    <li>Em Branch, escolha <strong>main</strong> (ou <strong>master</strong>), pasta <strong>/ (root)</strong> e clique em <strong>Save</strong>.</li>
+                    <li>Aguarde 1 minuto e recarregue a página: o GitHub fornecerá o link oficial verde com HTTPS!</li>
+                </ol>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="closeDeployModal()" class="px-4 py-2 text-sm font-semibold rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition">Entendi</button>
+            </div>
         </div>
-        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <p class="font-bold text-gray-800">Gem de Imagem Oficial:</p>
-          <a href="https://gemini.google.com/gem/1LkBE1WniyKjp1R3nWiVQwBLs3h-Ad_kjM" target="_blank" class="text-blue-600 hover:underline break-all font-mono text-[11px] mt-1 block">
-            gemini.google.com/gem/1LkBE1WniyKjp1R3nWiVQwBLs3h-Ad_kjM
-          </a>
-        </div>
-        <p class="text-gray-500 italic mt-2">Dica: abra o Modo de Voz para brainstormings contínuos com essas instâncias personalizadas.</p>
-      </div>
     </div>
-  </div>
 
-  <script>
-    // Definição das tarefas com pesos de pontos oficiais
-    const tasksConfig = {
-      'w1_mapa': 25,
-      'w1_post': 40,
-      'w2_campo': 25,
-      'w2_checkout': 20,
-      'w3_simulador': 25,
-      'w3_video': 40,
-      'w3_checkout': 40,
-      'w4_t1_passo1': 10,
-      'w4_t1_passo2': 10,
-      'w4_t1_print': 5,
-      'w4_mc_presenca': 20,
-      'w4_mc_gems': 5,
-      'w4_e1': 6,
-      'w4_e2': 6,
-      'w4_e3': 6,
-      'w4_e4': 7
-    };
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-lg transition-opacity duration-300 opacity-0 pointer-events-none flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-google-green"></i>
+        <span id="toast-text">Notificação</span>
+    </div>
 
-    // Biblioteca de roteiros e comandos estruturados
-    const promptsData = {
-      'w4_mural': {
-        title: 'Roteiro para a Dica do Mural Acadêmico',
-        content: `
-          <p><strong>Estrutura da contribuição para postar no mural:</strong></p>
-          <div class="p-3 bg-gray-50 border rounded font-mono text-[11px] space-y-2">
-            <p>💡 <strong>Qual é a sua dica?</strong><br>[Descreva uma prática real que funciona para você: conciliação de estudos, rotina de estudos, técnica de anotação, etc.]</p>
-            <p>✨ <strong>Como o Google Gemini ajuda ou pode ajudar nessa estratégia?</strong><br>[Exemplo: uso para quebrar tópicos extensos em bullet points, simular cenários de DevOps/Cibersegurança ou auditar cronogramas]</p>
-          </div>
-          <p class="text-amber-700 font-semibold">⚠️ Não esqueça de tirar um print da sua publicação no mural após salvar!</p>
-        `
-      },
-      'w4_etapa1': {
-        title: 'Etapa 1: Brain Dump Inicial',
-        content: `
-          <p>Copie e cole este prompt no Google Gemini para descarregar as pendências:</p>
-          <div class="p-3 bg-gray-50 border rounded font-mono text-[11px]">
-            Quero organizar melhor minha rotina acadêmica. Primeiro, vou listar tudo o que está ocupando minha cabeça agora. Enquanto eu estiver escrevendo, apenas registre as informações e não tente organizá-las, priorizá-las ou sugerir soluções. Quando eu disser "terminei", revise tudo comigo e pergunte se esqueci algum compromisso, prazo, prova, leitura, trabalho, projeto ou outra responsabilidade importante.
-          </div>
-        `
-      },
-      'w4_etapa2': {
-        title: 'Etapa 2: Categorização',
-        content: `
-          <p>Envie na mesma conversa após concluir a listagem:</p>
-          <div class="p-3 bg-gray-50 border rounded font-mono text-[11px]">
-            Terminei minha lista. Agora organize tudo o que compartilhei em categorias que façam sentido para a minha rotina, como compromissos fixos, provas, entregas, estudos, leituras, projetos e outras pendências. Identifique também os prazos que já informei, itens que podem estar relacionados entre si e informações que ainda estejam faltando. Antes de seguir, faça até 3 perguntas para completar apenas o que for necessário.
-          </div>
-        `
-      },
-      'w4_etapa3': {
-        title: 'Etapa 3: Priorização Inteligente',
-        content: `
-          <p>Envie na sequência para definir critérios:</p>
-          <div class="p-3 bg-gray-50 border rounded font-mono text-[11px]">
-            Agora quero definir minhas prioridades. Considere os prazos, a importância de cada atividade, o esforço necessário, meu nível de preparo e as consequências de adiar cada item. Antes de decidir, pergunte também quanto tempo eu realmente tenho disponível nos próximos dias. Depois, organize minhas prioridades em uma ordem clara e explique brevemente por que cada uma ficou nessa posição. Se houver conflito entre duas prioridades, mostre o conflito para que eu possa decidir.
-          </div>
-        `
-      },
-      'w4_etapa4': {
-        title: 'Etapa 4: Plano Acionável de 7 Dias',
-        content: `
-          <p>Comando para derivar passos práticos com Google Workspace:</p>
-          <div class="p-3 bg-gray-50 border rounded font-mono text-[11px]">
-            Agora transforme minhas prioridades em ações concretas e pequenas o suficiente para eu realmente começar. Evite tarefas vagas como "estudar para a prova" ou "fazer o trabalho". Para cada prioridade, indique o próximo passo específico, quanto tempo aproximadamente ele pode levar e quando faria sentido realizá-lo. Depois, sugira uma organização realista para os próximos 7 dias, considerando meus compromissos fixos, pausas e imprevistos. Indique recursos do Google que podem apoiar (Google Agenda, Tarefas, Keep, Docs).
-          </div>
-        `
-      },
-      'w3_rotas': {
-        title: 'As 3 Rotas de Vídeo — Semana 3',
-        content: `
-          <ul class="space-y-2">
-            <li><strong>Rota 1: Minha dificuldade superada</strong> (seu desafio de aprendizagem e como a representação visual/simulador ajudou).</li>
-            <li><strong>Rota 2: Resumo da Sessão Gemini</strong> (principais sacadas sobre interatividade no Canvas).</li>
-            <li><strong>Rota 3: Minha semana como Embaixador(a)</strong> (rotina, trocas e aprendizados práticos).</li>
-          </ul>
-        `
-      }
-    };
+    <script>
+        const activityData = {
+            'bv-1': {
+                tag: 'Boas-vindas',
+                title: 'Apresentação no Grupo de Embaixadores',
+                desc: '<p>Apresentar sua trajetória na comunidade, destacando seu histórico acadêmico multidisciplinar e objetivo como embaixadora.</p>',
+                prompt: `Salve, pessoal! Sou Alexsandra, podem me chamar de Alê. Sou estudante de Engenharia de Software e Segurança da Informação no Centro Universitário UniFatecie. Minha trajetória profissional começou na Educação, passando pela Pedagogia e Neuropsicopedagogia, e hoje sigo construindo minha caminhada na tecnologia, principalmente em Cibersegurança, Engenharia de Software e DevOps.\n\nEstar neste programa também representa uma conexão entre essas duas trajetórias. Quero explorar como o Gemini pode facilitar a compreensão de conteúdos técnicos complexos e com base científica.`
+            },
+            'bv-2': {
+                tag: 'Benefício',
+                title: 'Ativação do Cupom Google AI Plus',
+                desc: '<p>Acesse o portal de benefícios estudantis do Google e ative a assinatura gratuita de 1 ano do Gemini Advanced.</p>',
+                prompt: `Instruções:\n1. Acesse o portal oficial com seu e-mail institucional.\n2. Confirme sua matrícula ativa via SheerID.\n3. Vincule a conta para liberar os recursos do modelo Gemini Pro / Ultra e Canvas interativo.`
+            },
+            's1-1': {
+                tag: 'Semana 1',
+                title: 'Auditoria de Prompt para Estudos',
+                desc: '<p>Refatoração de prompts genéricos para agentes de ensino socrático e adaptativo.</p>',
+                prompt: `«Tenho uma prova na sexta-feira sobre [disciplina] e preciso me preparar até lá.\n\nOs conteúdos da prova são: [listar conteúdos].\n\nTenho [X horas/minutos] por dia disponíveis para estudar e considero que tenho mais dificuldade em [conteúdos].\n\nCrie um plano de estudos até sexta-feira, distribuindo os conteúdos de acordo com prioridade e dificuldade.\n\nPara cada sessão:\n- defina o conteúdo e o tempo de estudo;\n- sugira uma estratégia de aprendizagem adequada;\n- inclua uma revisão curta do que estudei anteriormente;\n- proponha questões para testar se realmente aprendi;\n- caso eu erre, explique o conceito antes de apresentar uma nova questão semelhante.\n\nNo último dia, faça uma revisão geral e um mini simulado.\nOrganize o plano por dia e horário, de forma realista, incluindo pequenas pausas.\nAntes de criar o plano, se faltar alguma informação importante, faça perguntas para personalizá-lo melhor.»`
+            },
+            's1-2': {
+                tag: 'Semana 1',
+                title: 'Meu Mapa de Impacto',
+                desc: '<p>Mapeamento conciso dos 3 pilares de impacto como Embaixadora Estudantil Google.</p>',
+                prompt: `MEU MAPA DE IMPACTO: EMBAIXADOR(A) ESTUDANTIL GOOGLE GEMINI\n\n1. MEU GRUPO: 5 colegas do CTF Cibersegurança.\n- Gargalos: Estatística, bloqueio de escrita, falta de tempo.\n- Ação Concreta: Oficinas "Gemini e CTF" com resumos e treinos de raciocínio.\n\n2. MINHA INSTITUIÇÃO: Alunos de Cursos Tech e Laboratórios de Inovação.\n- Ação Concreta: "Gemini Tech Hub" - mentorias de projetos e códigos.\n\n3. MINHA COMUNIDADE: População universitária e projetos sociais com idosos e acessibilidade.`
+            },
+            's2-1': {
+                tag: 'Semana 2',
+                title: 'Radar de Oportunidades: Entrevistas de Campo',
+                desc: '<p>Mapeamento de dores reais da rotina acadêmica após escutar 24 pessoas da comunidade.</p>',
+                prompt: `DESAFIO #2 - Radar de Oportunidades Coletivo:\n- Problema diagnosticado: Sobrecarga em busca de informações dispersas e rotinas repetitivas entre discentes e docentes.\n- Hipótese Gemini: O Gemini pode apoiar na centralização, síntese e estruturação rápida de guias passo a passo, reduzindo tarefas operacionais para focar em análise crítica.`
+            },
+            's3-video': {
+                tag: 'Semana 3 • Impacto',
+                title: 'Minha Semana em Vídeo (+40 pts)',
+                desc: '<p>Diretrizes para gravação de vídeo curto no Reels, TikTok ou LinkedIn:</p>',
+                prompt: `Passo 1: Escolha sua Rota de Vídeo\n• Rota 1: Minha dificuldade superada (o desafio técnico e como o visual ajudou).\n• Rota 2: Resumo da Sessão Gemini #03 (sacadas sobre interatividade).\n• Rota 3: Minha semana como Embaixador(a) (rotina e aprendizados).\n\nPasso 2: Crie no Gemini Omni (https://goo.gle/teste-Gemini)\nPasso 3: Publique nas redes com a hashtag #EmbaixadoresEstudantisGoogle.`
+            },
+            's4-mural': {
+                tag: 'Semana 4 • Desafio #02',
+                title: 'Roteiro da Dica para o Mural Acadêmico',
+                desc: '<p>Publique no mural coletivo (https://mural-embaixadores-br.web.app) respondendo a estas 2 perguntas:</p>',
+                prompt: `💡 Qual é a sua dica de organização?\n[Exemplo: Quebrar cronogramas de estudo em sprints curtas de 25 min com pausas programadas e acompanhamento visual]\n\n✨ Como o Google Gemini ajuda ou pode ajudar nessa estratégia?\n[Exemplo: Uso o Gemini para auditar as prioridades semanais a partir de um brain dump e sugerir tarefas acionáveis no Google Tarefas e Agenda]\n\n⚠️ Lembrete: Tire o print do seu post salvo no mural para o check-out!`
+            },
+            's4-masterclass': {
+                tag: 'Semana 4 • Masterclass',
+                title: 'Masterclass Pompeu IA: Gemini Omni',
+                desc: '<p>Resumo executivo do encontro de 16/09/2026 ministrado por Otávio Pompeu:</p>',
+                prompt: `1. Inteligência Híbrida: combinação do discernimento humano (roteiro, direção) com o poder generativo da IA.\n\n2. Workflow Híbrido em 9 Etapas:\n- Humano: 1. Ideia | 2. Pesquisa | 3. Roteiro | 9. Edição final\n- Híbrido: 4. Direção visual | 5. Prompts de imagem | 7. Prompts de vídeo\n- IA: 6. Geração de imagens | 8. Geração de vídeos (Gemini Omni)\n\n3. Gems Oficiais:\n• Gem de Vídeo: gemini.google.com/gem/1h7TAtudhhtMWahxr10HGCbNW6aBRqPT-\n• Gem de Imagem: gemini.google.com/gem/1LkBE1WniyKjp1R3nWiVQwBLs3h-Ad_kjM\n\n4. Dica de Ouro: Usar o Modo de Voz para brainstorm contínuo.`
+            },
+            's4-rotina': {
+                tag: 'Semana 4 • Desafio #01',
+                title: 'Minha Rotina em Ordem (Workflow 4 Etapas)',
+                desc: '<p>A sequência completa dos 4 prompts sequenciais para organizar sua rotina acadêmica:</p>',
+                prompt: `[PROMPT 1 - BRAIN DUMP]\n«Quero organizar melhor minha rotina acadêmica. Primeiro, vou listar tudo o que está ocupando minha cabeça agora. Enquanto eu estiver escrevendo, apenas registre as informações e não tente organizá-las, priorizá-las ou sugerir soluções. Quando eu disser “terminei”, revise tudo comigo e pergunte se esqueci algum compromisso, prazo, prova, leitura, trabalho, projeto ou outra responsabilidade importante.»\n\n[PROMPT 2 - CATEGORIZAÇÃO]\n«Terminei minha lista. Agora organize tudo o que compartilhei em categorias que façam sentido para a minha rotina, como compromissos fixos, provas, entregas, estudos, leituras, projetos e outras pendências. Identifique também prazos informados e itens relacionados. Antes de seguir, faça até 3 perguntas para completar apenas o necessário.»\n\n[PROMPT 3 - PRIORIZAÇÃO]\n«Agora quero definir minhas prioridades. Considere os prazos, importância de cada atividade, esforço necessário e consequências de adiar. Pergunte quanto tempo realmente tenho disponível. Depois organize minhas prioridades em ordem clara e aponte conflitos.»\n\n[PROMPT 4 - PLANO 7 DIAS]\n«Agora transforme minhas prioridades em ações concretas e pequenas para eu começar. Indique o próximo passo específico, tempo aproximado e recursos adequados da suíte Google (Agenda, Tarefas, Keep, Docs).»`
+            }
+        };
 
-    // Inicialização do estado a partir do LocalStorage
-    function loadState() {
-      const totalKeys = Object.keys(tasksConfig);
-      let completedCount = 0;
-      let totalPoints = 0;
+        const certsData = {
+            'bv': {
+                title: 'Encontro de Boas-Vindas',
+                date: '21 de agosto de 2026',
+                hours: '1 hora'
+            },
+            's2': {
+                title: 'Sessão de Google Gemini: Canvas com banco de dados',
+                date: '04 de setembro de 2026',
+                hours: '30 minutos'
+            },
+            's3': {
+                title: 'Sessão de Google Gemini 3: Visualizações Interativas',
+                date: '10 de setembro de 2026',
+                hours: '30 minutos'
+            }
+        };
 
-      totalKeys.forEach(id => {
-        const saved = localStorage.getItem('task_' + id);
-        const el = document.getElementById(id);
-        if (el) {
-          if (saved === 'true') {
-            el.checked = true;
-            completedCount++;
-            totalPoints += tasksConfig[id] || 0;
-          } else {
-            el.checked = false;
-          }
+        const STORAGE_KEY = 'google_ambassador_dashboard_state_v2';
+
+        function loadSavedState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const checks = JSON.parse(saved);
+                    Object.keys(checks).forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.checked = checks[id];
+                    });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+            updateProgress();
         }
-      });
 
-      const percent = Math.round((completedCount / totalKeys.length) * 100);
-      document.getElementById('progress-bar').style.width = percent + '%';
-      document.getElementById('progress-percent').innerText = percent + '%';
-      document.getElementById('tasks-count').innerText = `${completedCount} / ${totalKeys.length} concluídas`;
-      document.getElementById('total-points-badge').innerText = `${totalPoints} pts`;
-    }
-
-    function toggleTask(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        localStorage.setItem('task_' + id, el.checked ? 'true' : 'false');
-      }
-      loadState();
-    }
-
-    // Filtros de visualização
-    function filterWeek(week) {
-      const sections = document.querySelectorAll('.week-section');
-      const buttons = document.querySelectorAll('.filter-btn');
-
-      buttons.forEach(btn => {
-        if (btn.getAttribute('data-target') === week) {
-          btn.className = 'filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-blue-600 text-white shadow-sm';
-        } else {
-          btn.className = 'filter-btn text-xs font-semibold px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 hover:bg-gray-100';
+        function saveState() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const state = {};
+            checkboxes.forEach(cb => {
+                state[cb.id] = cb.checked;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
-      });
 
-      sections.forEach(sec => {
-        if (week === 'all') {
-          sec.classList.remove('hidden');
-        } else if (week === 'w0' || week === 'w1') {
-          sec.id === 'section-w1' ? sec.classList.remove('hidden') : sec.classList.add('hidden');
-        } else if (sec.id === 'section-' + week) {
-          sec.classList.remove('hidden');
-        } else {
-          sec.classList.add('hidden');
+        function updateProgress() {
+            saveState();
+
+            const sections = ['boas-vindas', 'semana1', 'semana2', 'semana3', 'semana4'];
+            let totalTasks = 0;
+            let completedTasks = 0;
+
+            sections.forEach(week => {
+                const secEl = document.getElementById('section-' + week);
+                if (!secEl) return;
+                const checkboxes = secEl.querySelectorAll('.task-checkbox');
+                const weekTotal = checkboxes.length;
+                let weekChecked = 0;
+
+                checkboxes.forEach(cb => {
+                    if (cb.checked) weekChecked++;
+                });
+
+                totalTasks += weekTotal;
+                completedTasks += weekChecked;
+
+                const weekPercent = weekTotal > 0 ? Math.round((weekChecked / weekTotal) * 100) : 0;
+
+                const statEl = document.getElementById('stat-' + week);
+                if (statEl) {
+                    statEl.querySelector('span:last-child').textContent = `${weekPercent}% (${weekChecked}/${weekTotal})`;
+                }
+
+                const badge = secEl.querySelector('.status-badge');
+                const dot = badge ? badge.querySelector('.status-dot') : null;
+                const text = badge ? badge.querySelector('.status-text') : null;
+
+                if (badge && dot && text) {
+                    if (weekChecked === weekTotal && weekTotal > 0) {
+                        secEl.classList.add('ring-2', 'ring-google-green', 'bg-green-50/20');
+                        badge.className = 'status-badge px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-google-green flex items-center gap-1.5';
+                        dot.className = 'status-dot w-2 h-2 rounded-full bg-google-green';
+                        text.textContent = 'Concluída! 🏅';
+                    } else {
+                        secEl.classList.remove('ring-2', 'ring-google-green', 'bg-green-50/20');
+                        badge.className = 'status-badge px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 flex items-center gap-1.5';
+                        dot.className = 'status-dot w-2 h-2 rounded-full bg-gray-400';
+                        text.textContent = `${weekChecked} de ${weekTotal} feitas`;
+                    }
+                }
+            });
+
+            const countBadge = document.getElementById('badge-all-count');
+            if (countBadge) countBadge.textContent = totalTasks;
+
+            const globalPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            document.getElementById('global-progress-bar').style.width = globalPercent + '%';
+            document.getElementById('sidebar-progress').style.width = globalPercent + '%';
+            document.getElementById('global-percentage').textContent = globalPercent + '%';
+            document.getElementById('global-counter').textContent = `${completedTasks} de ${totalTasks} concluídas`;
+
+            const icon = document.getElementById('progress-icon');
+            if (globalPercent === 100) {
+                icon.textContent = '🏆';
+            } else if (globalPercent >= 60) {
+                icon.textContent = '🔥';
+            } else if (globalPercent >= 30) {
+                icon.textContent = '⚡';
+            } else {
+                icon.textContent = '🚀';
+            }
         }
-      });
-    }
 
-    // Controle de Modais
-    function openModal(modalId) {
-      document.getElementById(modalId).classList.remove('hidden');
-    }
+        function filterTimeline(weekId) {
+            const sections = document.querySelectorAll('.week-section');
+            const buttons = document.querySelectorAll('.nav-btn');
 
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.add('hidden');
-    }
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-50', 'text-google-blue');
+                btn.classList.add('text-gray-700');
+            });
 
-    function openPromptModal(promptKey) {
-      const data = promptsData[promptKey];
-      if (data) {
-        document.getElementById('modal-title').innerText = data.title;
-        document.getElementById('modal-body').innerHTML = data.content;
-        openModal('modal-container');
-      }
-    }
+            const activeBtn = document.getElementById('tab-' + weekId);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-blue-50', 'text-google-blue');
+                activeBtn.classList.remove('text-gray-700');
+            }
 
-    function openCertModal(nome, data, duracao, emissor) {
-      document.getElementById('modal-title').innerText = 'Certificado Oficial de Participação';
-      document.getElementById('modal-body').innerHTML = `
-        <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 text-center space-y-2">
-          <div class="text-3xl">🏅</div>
-          <h4 class="font-bold text-gray-900 text-sm">${nome}</h4>
-          <p class="text-xs text-gray-600">Conferido a <strong>Alexsandra Tavares</strong></p>
-          <div class="text-[11px] text-gray-500 pt-2 border-t border-gray-200 text-left space-y-1">
-            <p><strong>Data de Emissão:</strong> ${data}</p>
-            <p><strong>Carga Horária:</strong> ${duracao}</p>
-            <p><strong>Coordenação / Emissor:</strong> ${emissor}</p>
-            <p class="text-emerald-700 font-semibold mt-2">✓ Autenticidade Registrada pelo Programa</p>
-          </div>
-        </div>
-      `;
-      openModal('modal-container');
-    }
+            sections.forEach(sec => {
+                if (weekId === 'all' || sec.getAttribute('data-week') === weekId) {
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+        }
 
-    // Função de Download do arquivo HTML atualizado
-    function downloadHtmlFile() {
-      const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'painel_embaixadores_google_atualizado.html';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+        function openModal(key) {
+            const data = activityData[key];
+            if (!data) return;
 
-    // Carregar na inicialização
-    window.onload = loadState;
-  </script>
+            document.getElementById('modal-tag').textContent = data.tag;
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-desc').innerHTML = data.desc;
+            document.getElementById('modal-code').textContent = data.prompt;
+
+            const modal = document.getElementById('instruction-modal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('instruction-modal').classList.add('hidden');
+        }
+
+        function openCertDetails(key) {
+            const cert = certsData[key];
+            if (!cert) return;
+            document.getElementById('cert-title').textContent = cert.title;
+            document.getElementById('cert-date').textContent = cert.date;
+            document.getElementById('cert-hours').textContent = cert.hours;
+            document.getElementById('cert-modal').classList.remove('hidden');
+        }
+
+        function closeCertModal() {
+            document.getElementById('cert-modal').classList.add('hidden');
+        }
+
+        function openDeployModal() {
+            document.getElementById('deploy-modal').classList.remove('hidden');
+        }
+
+        function closeDeployModal() {
+            document.getElementById('deploy-modal').classList.add('hidden');
+        }
+
+        function copyModalPrompt() {
+            const text = document.getElementById('modal-code').textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('Conteúdo copiado com sucesso!');
+            } catch (err) {
+                showToast('Falha ao copiar.');
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function downloadHtmlFile() {
+            const content = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Arquivo index.html baixado para publicação!');
+        }
+
+        function exportProgressData() {
+            const saved = localStorage.getItem(STORAGE_KEY) || '{}';
+            const blob = new Blob([saved], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'progresso_embaixador_google.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Backup exportado com sucesso!');
+        }
+
+        function importProgressData(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const data = JSON.parse(evt.target.result);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                    loadSavedState();
+                    showToast('Progresso importado com sucesso!');
+                } catch (err) {
+                    showToast('Arquivo de backup inválido.');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        }
+
+        function resetAllTasks() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            checkboxes.forEach(cb => cb.checked = false);
+            updateProgress();
+            showToast('Caixas de seleção reiniciadas.');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('instruction-modal')) closeModal();
+            if (e.target === document.getElementById('cert-modal')) closeCertModal();
+            if (e.target === document.getElementById('deploy-modal')) closeDeployModal();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSavedState);
+    </script>
 </body>
 </html>
