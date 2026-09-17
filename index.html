@@ -459,6 +459,14 @@
                     </div>
                 </div>
 
+                <!-- Banner de Contexto da Semana 4 -->
+                <div class="p-3.5 bg-gradient-to-r from-purple-50 to-indigo-50/60 rounded-xl border border-purple-100 mb-4 text-xs text-gray-700 leading-relaxed">
+                    <div class="font-bold text-purple-900 flex items-center gap-1.5 mb-1 text-sm">
+                        <span>💡</span> Colocando o Repertório de Rotina para Circular
+                    </div>
+                    <p>Às vezes uma estratégia que outro embaixador usa resolve um gargalo que você ainda não conseguiu solucionar na sua rotina. Hoje o foco é circular esse repertório no mural coletivo e trocar ideias!</p>
+                </div>
+
                 <div class="space-y-3" id="tasks-semana4">
                     
                     <!-- Desafio #02 Semana 4 (Mural) -->
@@ -473,12 +481,16 @@
                                     <button type="button" onclick="openModal('s4-mural')" class="text-xs text-google-blue hover:underline font-medium">
                                         <i class="fa-solid fa-circle-question"></i> Ver Roteiro
                                     </button>
-                                    <a href="https://mural-embaixadores-br.web.app" target="_blank" onclick="event.stopPropagation()" class="px-2 py-0.5 rounded bg-purple-600 text-white text-xs font-semibold hover:bg-purple-700 transition">
-                                        Mural ↗
+                                    <a href="https://mural-embaixadores-br.web.app" target="_blank" onclick="event.stopPropagation()" class="px-2.5 py-1 rounded-lg bg-purple-600 text-white text-xs font-semibold hover:bg-purple-700 transition shadow-sm">
+                                        Abrir Mural ↗
                                     </a>
                                 </div>
                             </div>
-                            <p class="text-xs text-gray-600 mt-1">Postar sua dica de rotina no mural coletivo (Qual é a dica? Como o Gemini ajuda?) e guardar o print da evidência para o check-out.</p>
+                            <div class="mt-2 space-y-1 text-xs text-gray-600 leading-relaxed">
+                                <p><strong>Passo 1:</strong> Compartilhe sua dica no mural respondendo: <em>"Qual é a sua dica?"</em> e <em>"Como o Google Gemini ajuda ou pode ajudar nessa estratégia?"</em></p>
+                                <p><strong>Passo 2:</strong> Explore as contribuições dos outros embaixadores, navegue pelas categorias e anote o que faz sentido para sua rotina.</p>
+                                <p class="text-amber-800 font-semibold pt-1">📷 Lembrete: Guarde um print da sua publicação no mural para o Check-out da Semana 4!</p>
+                            </div>
                         </div>
                     </label>
 
@@ -488,13 +500,18 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between">
                                 <span class="task-title text-sm font-semibold text-gray-800 flex items-center gap-1.5">
-                                    <span>🎬</span> Masterclass #01 com Otávio Pompeu: Gemini Omni (+20 pts)
+                                    <span>🎬</span> Masterclass #01 com Otávio Pompeu: Gemini para Criação de Conteúdo (+20 pts)
                                 </span>
-                                <button type="button" onclick="openModal('s4-masterclass')" class="text-xs text-google-blue hover:underline font-medium">
-                                    <i class="fa-solid fa-sparkles"></i> Ver Resumo & Gems
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <a href="https://rsvp.withgoogle.com/events/masterclass1" target="_blank" onclick="event.stopPropagation()" class="px-2.5 py-1 rounded-lg bg-blue-50 text-google-blue border border-blue-200 hover:bg-blue-100 text-xs font-semibold transition">
+                                        RSVP Oficial ↗
+                                    </a>
+                                    <button type="button" onclick="openModal('s4-masterclass')" class="text-xs text-google-blue hover:underline font-medium">
+                                        <i class="fa-solid fa-sparkles"></i> Ver Resumo & Gems
+                                    </button>
+                                </div>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">Estudo do workflow híbrido de 9 etapas, interpolação de keyframes para vídeos e teste dos Gems oficiais de Imagem e Vídeo.</p>
+                            <p class="text-xs text-gray-500 mt-1">Encontro realizado em 16/09 às 15h. Estudo do workflow híbrido em 9 etapas, keyframes no Gemini Omni e teste dos Gems oficiais.</p>
                         </div>
                     </label>
 
@@ -682,15 +699,15 @@
             },
             's4-mural': {
                 tag: 'Semana 4 • Desafio #02',
-                title: 'Roteiro da Dica para o Mural Acadêmico',
-                desc: '<p>Publique no mural coletivo (https://mural-embaixadores-br.web.app) respondendo a estas 2 perguntas:</p>',
-                prompt: `💡 Qual é a sua dica de organização?\n[Exemplo: Quebrar cronogramas de estudo em sprints curtas de 25 min com pausas programadas e acompanhamento visual]\n\n✨ Como o Google Gemini ajuda ou pode ajudar nessa estratégia?\n[Exemplo: Uso o Gemini para auditar as prioridades semanais a partir de um brain dump e sugerir tarefas acionáveis no Google Tarefas e Agenda]\n\n⚠️ Lembrete: Tire o print do seu post salvo no mural para o check-out!`
+                title: 'Desafio #02: Mural de Organização da Vida Acadêmica (+25 pts)',
+                desc: '<p>Acesse o mural coletivo oficial (<strong><a href="https://mural-embaixadores-br.web.app" target="_blank" class="text-google-blue underline">mural-embaixadores-br.web.app</a></strong>) e realize as 2 etapas:</p><ol class="list-decimal list-inside space-y-1 mt-1 text-xs"><li><strong>Passo 1:</strong> Compartilhe uma dica que realmente funciona para sua rotina, respondendo as duas perguntas abaixo.</li><li><strong>Passo 2:</strong> Explore as contribuições dos colegas para buscar ideias aplicáveis.</li></ol><p class="mt-2 text-amber-700 font-semibold">📷 Lembrete: Guarde o print da sua dica postada para enviar no Check-out da Semana 4!</p>',
+                prompt: `[ROTEIRO PARA POSTAR NO MURAL]\n\n💡 Qual é a sua dica de organização?\n[Exemplo: Quebrar cronogramas de estudo em blocos de 25 min com pausas ativas e manter registro visual do pipeline de entregas]\n\n✨ Como o Google Gemini ajuda ou pode ajudar nessa estratégia?\n[Exemplo: Utilizo o Gemini para organizar tarefas semanais a partir do Brain Dump, identificar conflitos de prazos e estruturar resumos adaptativos para provas]\n\nLink do Mural: https://mural-embaixadores-br.web.app`
             },
             's4-masterclass': {
-                tag: 'Semana 4 • Masterclass',
-                title: 'Masterclass Pompeu IA: Gemini Omni',
-                desc: '<p>Resumo executivo do encontro de 16/09/2026 ministrado por Otávio Pompeu:</p>',
-                prompt: `1. Inteligência Híbrida: combinação do discernimento humano (roteiro, direção) com o poder generativo da IA.\n\n2. Workflow Híbrido em 9 Etapas:\n- Humano: 1. Ideia | 2. Pesquisa | 3. Roteiro | 9. Edição final\n- Híbrido: 4. Direção visual | 5. Prompts de imagem | 7. Prompts de vídeo\n- IA: 6. Geração de imagens | 8. Geração de vídeos (Gemini Omni)\n\n3. Gems Oficiais:\n• Gem de Vídeo: gemini.google.com/gem/1h7TAtudhhtMWahxr10HGCbNW6aBRqPT-\n• Gem de Imagem: gemini.google.com/gem/1LkBE1WniyKjp1R3nWiVQwBLs3h-Ad_kjM\n\n4. Dica de Ouro: Usar o Modo de Voz para brainstorm contínuo.`
+                tag: 'Semana 4 • Masterclass #01',
+                title: 'Masterclass Pompeu IA: Gemini para Criação de Conteúdo (+20 pts)',
+                desc: '<p>Encontro oficial de 16/09/2026 ministrado por Otávio Pompeu (Creator, Artista Visual e Professor):</p><p class="mt-1 text-xs">Inscrição oficial: <strong><a href="https://rsvp.withgoogle.com/events/masterclass1" target="_blank" class="text-google-blue underline">rsvp.withgoogle.com/events/masterclass1</a></strong></p>',
+                prompt: `1. CONCEITO CENTRAL: INTELIGÊNCIA HÍBRIDA\nCombinação do discernimento humano (ideia, pesquisa, roteiro manuscrito e edição) com o poder computacional da IA (geração e keyframing).\n\n2. WORKFLOW EM 9 ETAPAS:\n• Humano: 1. Ideia | 2. Pesquisa | 3. Roteiro | 9. Edição final\n• Híbrido: 4. Direção visual | 5. Prompts de imagem | 7. Prompts de vídeo\n• IA: 6. Geração de imagens | 8. Geração de vídeos (Gemini Omni)\n\n3. GEMS OFICIAIS:\n• Gem de Vídeo: https://gemini.google.com/gem/1h7TAtudhhtMWahxr10HGCbNW6aBRqPT-\n• Gem de Imagem: https://gemini.google.com/gem/1LkBE1WniyKjp1R3nWiVQwBLs3h-Ad_kjM\n\n4. BOAS PRÁTICAS NO GEMINI OMNI:\n• Interpolação de Keyframes: Trave a Imagem A (início) e Imagem B (fim) para o modelo criar a física da transição.\n• Sonorização Nativa: Sincronização automática de efeitos sonoros e ruídos de Foley com os movimentos.\n• Modo de Voz: Ative para brainstorms ágeis e evolução orgânica do raciocínio criativo.`
             },
             's4-rotina': {
                 tag: 'Semana 4 • Desafio #01',
